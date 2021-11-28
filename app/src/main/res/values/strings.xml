@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">MiniProjectApp</string>
+    <string name="logout">logout</string>
+    <string name="facebook_app_id">381752510400728</string>
+    <string name="fb_login_protocol_scheme">fb381752510400728</string>
+    <string name="twitter_consumer_key" translatable="false"> AqLnJZkfEVKeQ4hKuaLYdsEJv </string>
+    <string name="twitter_consumer_secret" translatable="false"> Q1nPT2eRImZ8at4dRDjHqUwW7pO62rrFlrtMGUIoyaF2thitGv </string>
+    <string name="History">history</string>
+    <string name="Home">Home</string>
+    <string name="Logout">Logout</string>
+
+</resources>
