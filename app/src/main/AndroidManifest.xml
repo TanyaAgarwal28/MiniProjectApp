@@ -18,6 +18,18 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MiniProjectApp">
         <activity
+            android:name=".History1"
+            android:exported="true" />
+        <activity
+            android:name=".OtpPage"
+            android:exported="true" />
+        <activity
+            android:name=".Verification"
+            android:exported="true" />
+        <activity
+            android:name=".SplashScreen"
+            android:exported="true" />
+        <activity
             android:name=".History"
             android:exported="true" />
 

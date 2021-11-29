@@ -40,13 +40,14 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
 
-public class BarCode extends AppCompatActivity {
+public class BarCode extends AppCompatActivity{
     private SurfaceView surfaceView;
     private BarcodeDetector barcodeDetector;
     private CameraSource cameraSource;
@@ -54,11 +55,11 @@ public class BarCode extends AppCompatActivity {
     private ToneGenerator toneGen1;
     private TextView barcodeText;
     private String barcodeData;
-    private TextView retrieveTV;
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
     DatabaseReference zonesRef,history;
     AlertDialog.Builder dialog;
+    HistoryRecord hr;
 
 
     @Override
@@ -70,7 +71,6 @@ public class BarCode extends AppCompatActivity {
         toneGen1 = new ToneGenerator(AudioManager.STREAM_MUSIC, 100);
         surfaceView = findViewById(R.id.surfaceView);
         barcodeText = findViewById(R.id.textView3);
-        retrieveTV = findViewById(R.id.textView15);
         dialog = new AlertDialog.Builder(this);
         firebaseDatabase = FirebaseDatabase.getInstance();
         initialiseDetectorsAndSources();
@@ -153,49 +153,10 @@ public class BarCode extends AppCompatActivity {
                                             String str="Medicine"+i;
                                             if (Objects.equals(dataSnapshot.child(str).child("barcodeNumber").getValue(String.class), barcodeData)) {
                                                 dialog.setMessage("Your medicine is authorized");
-                                                history.child("medicine1")
-                                                        .addListenerForSingleValueEvent(new ValueEventListener() {
-                                                                                            @Override
-                                                                                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                                                                                Map<String, Object> postValues = new HashMap<String,Object>();
-                                                                                                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                                                                                                    postValues.put(snapshot.getKey(),snapshot.getValue());
-                                                                                                }
-                                                                                                postValues.put("barcodeNumber", barcodeData);
-                                                                                                postValues.put("manufacturingDate", "2020-1-1");
-                                                                                                postValues.put("expiryDate", "2021-1-1");
-                                                                                                postValues.put("price", "20");
-                                                                                                postValues.put("name", "tanya");
-                                                                                                history.child("medicine1").updateChildren(postValues);
-                                                                                            }
-
-                                                                                            @Override
-                                                                                            public void onCancelled(@NonNull DatabaseError databaseError) {}
-                                                                                        }
-                                                        );
                                                 break;
                                             } else {
                                                 dialog.setMessage("Your medicine is not authorized");
-                                                history.child("medicine1")
-                                                        .addListenerForSingleValueEvent(new ValueEventListener() {
-                                                                                            @Override
-                                                                                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                                                                                Map<String, Object> postValues = new HashMap<String,Object>();
-                                                                                                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                                                                                                    postValues.put(snapshot.getKey(),snapshot.getValue());
-                                                                                                }
-                                                                                                postValues.put("barcodeNumber", barcodeData);
-                                                                                                postValues.put("manufacturingDate", "2020-1-1");
-                                                                                                postValues.put("expiryDate", "2021-1-1");
-                                                                                                postValues.put("price", "20");
-                                                                                                postValues.put("name", "tanya");
-                                                                                                history.child("medicine1").updateChildren(postValues);
-                                                                                            }
 
-                                                                                            @Override
-                                                                                            public void onCancelled(@NonNull DatabaseError databaseError) {}
-                                                                                        }
-                                                        );
                                             }
                                         }
                                         dialog.setPositiveButton("OK",
@@ -207,13 +168,24 @@ public class BarCode extends AppCompatActivity {
                                                         finish();
                                                     }
                                                 });
+                                        dialog.setNegativeButton("Show Details",
+                                                new DialogInterface.OnClickListener() {
+                                                    public void onClick(DialogInterface dialog,
+                                                                        int which) {
+                                                        hr=new HistoryRecord(barcodeData,"2020-1-12","2021-12-1","20","paracetamol");
+                                                        Intent k=new Intent(BarCode.this,History.class);
+                                                        k.putExtra("HistoryRecord",hr);
+                                                        startActivity(k);
+
+                                                    }
+                                                });
                                         AlertDialog alertDialog = dialog.create();
                                         alertDialog.show();
                                     }
 
                                     @Override
                                     public void onCancelled(@NonNull DatabaseError databaseError) {
-                                        retrieveTV.setText(databaseError.toException().toString());
+
                                     }
                                 });
 
@@ -244,13 +216,24 @@ public class BarCode extends AppCompatActivity {
                                                         finish();
                                                     }
                                                 });
+                                        dialog.setNegativeButton("Show Details",
+                                                new DialogInterface.OnClickListener() {
+                                                    public void onClick(DialogInterface dialog,
+                                                                        int which) {
+                                                        hr=new HistoryRecord(barcodeData,"2020-1-12","2021-12-1","20","paracetamol");
+                                                        Intent k=new Intent(BarCode.this,History.class);
+                                                        k.putExtra("HistoryRecord",hr);
+                                                        startActivity(k);
+
+                                                    }
+                                                });
                                         AlertDialog alertDialog = dialog.create();
                                         alertDialog.show();
                                     }
 
                                     @Override
                                     public void onCancelled(@NonNull DatabaseError databaseError) {
-                                        retrieveTV.setText(databaseError.toException().toString());
+
                                     }
                                 });
 

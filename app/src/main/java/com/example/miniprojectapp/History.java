@@ -11,18 +11,26 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.facebook.AccessToken;
 import com.facebook.login.LoginManager;
 import com.google.firebase.auth.FirebaseAuth;
+import com.example.miniprojectapp.BarCode;
 
 public class History extends AppCompatActivity {
+    TextView timeline,website;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_history);
+        timeline=findViewById(R.id.timeline);
+        website=findViewById(R.id.website);
+        HistoryRecord h= (HistoryRecord) getIntent().getSerializableExtra("HistoryRecord");
+        String str="BARCODE NUMBER: "+h.getBarcodeNumber()+"\n"+"NAME OF MEDICINE: "+h.getName()+"\n"+"PRICE OF MEDICINE: "+h.getPrice()+"\n"+"EXPIRY DATE: "+h.getExpiryDate()+"\n"+"MANUFACTURING DATE: "+h.getManufacturingDate();
+        timeline.setText(str);
 
 
     }

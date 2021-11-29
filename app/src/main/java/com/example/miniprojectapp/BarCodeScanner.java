@@ -74,7 +74,7 @@ public class BarCodeScanner extends AppCompatActivity {
                 finish();
                 return true;
             case R.id.History:
-                Intent x = new Intent(BarCodeScanner.this, History.class);
+                Intent x = new Intent(BarCodeScanner.this, History1.class);
                 startActivity(x);
                 finish();
                 return true;

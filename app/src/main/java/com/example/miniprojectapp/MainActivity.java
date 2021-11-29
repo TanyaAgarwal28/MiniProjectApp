@@ -65,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
     ImageButton signInWithEmail;
     CallbackManager callbackManager;
     LoginButton loginButton;
+    Button signinWithOtp;
     //private FirebaseAuth.AuthStateListener mAuthListener;
     //private TwitterLoginButton mTwitterBtn;
 
@@ -72,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        signinWithOtp=findViewById(R.id.button3);
         signInWithEmail=(ImageButton)findViewById(R.id.imageButton);
         signup=(Button)findViewById(R.id.button5);
         signInWithGmail=(SignInButton)findViewById(R.id.signin);
@@ -155,6 +157,15 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });*/
+
+        signinWithOtp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i=new Intent(MainActivity.this,OtpPage.class);
+                startActivity(i);
+                finish();
+            }
+        });
 
 
 
